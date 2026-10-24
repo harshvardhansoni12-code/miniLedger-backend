@@ -43,16 +43,18 @@ MiniLedger is an Express API for phone-based sign-in and tracking loans. It uses
 
 ## Production build
 
-After setting `src/.env` for the production database and environment, apply migrations, build, and start the API:
+For a local production run, set `src/.env`, apply migrations, build, and start the API:
 
 ```sh
 npm run db:deploy
 npm run db:generate
 npm run build
-npm start
+npm run start:local
 ```
 
 Set `NODE_ENV=production` and configure `CORS_ORIGIN` with the exact frontend origins that should be allowed. In production, OTP codes are not included in the API response.
+
+The included `render.yaml` configures Render to build with `npm run build` and start the compiled server with `npm start`. Configure `DATABASE_URL` and `CORS_ORIGIN` in the Render service environment. The start command runs `dist/index.js`; do not set it to `node index.js`, because there is no root-level `index.js`.
 
 ## Available scripts
 
@@ -60,14 +62,15 @@ Set `NODE_ENV=production` and configure `CORS_ORIGIN` with the exact frontend or
 | --- | --- |
 | `npm run dev` | Run the API with TypeScript watch mode |
 | `npm run build` | Compile TypeScript into `dist/` |
-| `npm start` | Run the compiled API |
+| `npm start` | Run the compiled API using platform-provided environment variables |
+| `npm run start:local` | Run the compiled API using `src/.env` |
 | `npm run db:generate` | Generate the Prisma client |
 | `npm run db:migrate` | Create and apply a development migration |
 | `npm run db:deploy` | Apply checked-in migrations |
 | `npm run db:push` | Push the Prisma schema to the database without creating a migration |
 | `npm run db:studio` | Open Prisma Studio |
 
-The Prisma scripts read `DATABASE_URL` from `src/.env`.
+The Prisma scripts read `DATABASE_URL` from `src/.env`; the production start command uses environment variables supplied by the hosting platform.
 
 ## Authentication and API
 
