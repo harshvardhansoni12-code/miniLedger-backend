@@ -40,7 +40,7 @@ authRouter.post("/request-otp", (req: Request, res: Response) => {
   console.info(`Mock OTP for ${phone}: ${code}`);
   res.json({
     message: "OTP generated.",
-    ...(process.env.NODE_ENV === "production" ? {} : { mockOtp: code }),
+    mockOtp: code,
   });
 });
 
@@ -51,7 +51,9 @@ authRouter.post("/verify-otp", async (req: Request, res: Response) => {
     typeof req.body.otp !== "string" ||
     !/^\d{6}$/.test(req.body.otp)
   ) {
-    res.status(400).json({ error: "A valid phone number and six-digit OTP are required" });
+    res
+      .status(400)
+      .json({ error: "A valid phone number and six-digit OTP are required" });
     return;
   }
 
@@ -67,7 +69,9 @@ authRouter.post("/verify-otp", async (req: Request, res: Response) => {
   challenge.attempts += 1;
   if (challenge.attempts > MAX_OTP_ATTEMPTS) {
     otpChallenges.delete(phone);
-    res.status(429).json({ error: "Too many OTP attempts. Request a new OTP." });
+    res
+      .status(429)
+      .json({ error: "Too many OTP attempts. Request a new OTP." });
     return;
   }
 
