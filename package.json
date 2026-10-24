@@ -1,0 +1,34 @@
+{
+  "name": "miniledger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "dotenv -e src/.env -- tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "dotenv -e src/.env -- node dist/index.js",
+    "db:generate": "dotenv -e src/.env -- prisma generate",
+    "db:migrate": "dotenv -e src/.env -- prisma migrate dev",
+    "db:deploy": "dotenv -e src/.env -- prisma migrate deploy",
+    "db:push": "dotenv -e src/.env -- prisma db push",
+    "db:studio": "dotenv -e src/.env -- prisma studio"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "prisma": "^6.19.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "cors": "^2.8.6",
+    "dotenv-cli": "^11.0.0",
+    "express": "^5.3.0"
+  }
+}
